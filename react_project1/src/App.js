@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import {Component} from 'react'
+import { response } from 'express';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(){
+    super();
+    this.state={
+      utenti:[]
+    }
+  }
+  
+  componentDidMount(){
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then(res => res.json())
+    .then(dati => this.setState({utenti: dati}))
+    .catch(err => console.error(err));
+  }
+   
+  render(){
+    return (
+      <div className="App">
+        <button onClick={()=>{
+          console.log('prova')
+        }
+        }>change name</button>
+        <p>{this.state.utenti.map((utenti)=><div key={utenti.id}><h1>{utenti.name}</h1></div>)}</p>
+      </div>
+    );
+  }
 }
 
 export default App;
