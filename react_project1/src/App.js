@@ -1,7 +1,8 @@
 import './App.css';
 import React from 'react';
 import {Component} from 'react'
-
+import Searchbox from './components/search-box/search-box.component';
+import Cardlist from './components/card-list/card-list.component';
 
 class App extends Component {
   constructor(){
@@ -25,14 +26,16 @@ class App extends Component {
   }
 
   render(){
+    console.log('render')
     const {utenti, searchField}= this.state;
     const {onSearchChange}= this
     const filteredUtenti = utenti.filter((utenti)=>{return utenti.name.toLowerCase().includes(searchField)})  
 
     return (
       <div className="App">
-        <input className='search-box' type='search' placeholder='search monster' onChange={onSearchChange}/>
-        {filteredUtenti.map((utente)=> <div key={utente.id}><h1>{utente.name}</h1></div>)}
+        <h1>Monster</h1>
+        <Searchbox onChangeHandler={onSearchChange} className='search-box' type='search' placeholder='search monster' />
+        <Cardlist utenti={filteredUtenti}/>
       </div>
     );
   }
